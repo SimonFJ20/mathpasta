@@ -1,11 +1,14 @@
-import { AST, ValueNode } from "./ast";
+import { AST, FunctionNode, ValueNode } from "./ast";
 
 export const latexify = (ast: AST): string => {
     return `${valueNode(ast)}`;
 }
 
+const constants: {[key: string]: string} = {
+    'pi': '\\pi',
+}
+
 const valueNode = (node: ValueNode): string => {
-    console.log(node)
     switch (node.type) {
         case 'equal':
             return `{${valueNode(node.left)}}={${valueNode(node.right)}}`;
@@ -32,8 +35,9 @@ const valueNode = (node: ValueNode): string => {
         case 'parenthesis':
             return `\\left(${valueNode(node.value)}\\right)`;
         case 'function':
-            return `${node.name}(${node.params.join(', ')})`;
+            return `\\${node.name}${node.params.map(p => `{${p}}`).join('')}`;
         case 'name':
+            return node.value in constants ? constants[node.value] : node.value;
         case 'int':
         case 'float':
             return node.value;
