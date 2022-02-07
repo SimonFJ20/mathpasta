@@ -14,6 +14,7 @@
     "@types/nearley": "^2.11.2"
   },
   "scripts": {
+    "install": "npm run build",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node --enable-source-maps dist/main.js",
     "build": "nearleyc grammar.ne -o src/grammar.gen.ts && tsc",
