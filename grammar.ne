@@ -29,7 +29,7 @@ const lexer = compile({
 
 @lexer lexer
 
-value       ->  AS
+value       ->  AS                  {% id %}
 
 AS          ->  AS _ "+" _ MD       {% v => ({type: 'addition', left: v[0], right: v[4]}) %}
             |   AS _ "-" _ MD       {% v => ({type: 'subtraction', left: v[0], right: v[4]}) %}

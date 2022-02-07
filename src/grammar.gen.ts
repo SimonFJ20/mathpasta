@@ -64,7 +64,7 @@ interface Grammar {
 const grammar: Grammar = {
   Lexer: lexer,
   ParserRules: [
-    {"name": "value", "symbols": ["AS"]},
+    {"name": "value", "symbols": ["AS"], "postprocess": id},
     {"name": "AS", "symbols": ["AS", "_", {"literal":"+"}, "_", "MD"], "postprocess": v => ({type: 'addition', left: v[0], right: v[4]})},
     {"name": "AS", "symbols": ["AS", "_", {"literal":"-"}, "_", "MD"], "postprocess": v => ({type: 'subtraction', left: v[0], right: v[4]})},
     {"name": "AS", "symbols": ["MD"], "postprocess": id},
@@ -73,7 +73,7 @@ const grammar: Grammar = {
     {"name": "MD", "symbols": ["E"], "postprocess": id},
     {"name": "E", "symbols": ["P", "_", {"literal":"^"}, "_", "E"], "postprocess": v => ({type: 'exponentation', left: v[0], right: v[4]})},
     {"name": "E", "symbols": ["P"], "postprocess": id},
-    {"name": "P", "symbols": [{"literal":"("}, "_", "value", "_", {"literal":")"}], "postprocess": v => v[0]},
+    {"name": "P", "symbols": [{"literal":"("}, "_", "value", "_", {"literal":")"}], "postprocess": v => ({type: 'parenthesis', value: v[2]})},
     {"name": "P", "symbols": ["function"], "postprocess": id},
     {"name": "function", "symbols": [(lexer.has("name") ? {type: "name"} : name), "_", {"literal":"("}, "params", {"literal":")"}], "postprocess": v => ({type: 'function', name: v[0], params: v[3]})},
     {"name": "function", "symbols": ["literal"], "postprocess": id},
