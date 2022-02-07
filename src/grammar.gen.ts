@@ -64,7 +64,15 @@ interface Grammar {
 const grammar: Grammar = {
   Lexer: lexer,
   ParserRules: [
-    {"name": "value", "symbols": ["AS"], "postprocess": id},
+    {"name": "result", "symbols": ["_", "value", "_"], "postprocess": id},
+    {"name": "value", "symbols": ["comparison"], "postprocess": id},
+    {"name": "comparison", "symbols": ["comparison", "_", {"literal":"="}, "_", "AS"], "postprocess": v => ({type: 'equal', left: v[0], right: v[4]})},
+    {"name": "comparison", "symbols": ["comparison", "_", {"literal":"!="}, "_", "AS"], "postprocess": v => ({type: 'inequal', left: v[0], right: v[4]})},
+    {"name": "comparison", "symbols": ["comparison", "_", {"literal":"<="}, "_", "AS"], "postprocess": v => ({type: 'lte', left: v[0], right: v[4]})},
+    {"name": "comparison", "symbols": ["comparison", "_", {"literal":">="}, "_", "AS"], "postprocess": v => ({type: 'gte', left: v[0], right: v[4]})},
+    {"name": "comparison", "symbols": ["comparison", "_", {"literal":"<"}, "_", "AS"], "postprocess": v => ({type: 'lt', left: v[0], right: v[4]})},
+    {"name": "comparison", "symbols": ["comparison", "_", {"literal":">"}, "_", "AS"], "postprocess": v => ({type: 'gt', left: v[0], right: v[4]})},
+    {"name": "comparison", "symbols": ["AS"], "postprocess": id},
     {"name": "AS", "symbols": ["AS", "_", {"literal":"+"}, "_", "MD"], "postprocess": v => ({type: 'addition', left: v[0], right: v[4]})},
     {"name": "AS", "symbols": ["AS", "_", {"literal":"-"}, "_", "MD"], "postprocess": v => ({type: 'subtraction', left: v[0], right: v[4]})},
     {"name": "AS", "symbols": ["MD"], "postprocess": id},
@@ -101,7 +109,7 @@ const grammar: Grammar = {
     {"name": "__$ebnf$1", "symbols": ["__$ebnf$1", "__$ebnf$1$subexpression$2"], "postprocess": (d) => d[0].concat([d[1]])},
     {"name": "__", "symbols": ["__$ebnf$1"]}
   ],
-  ParserStart: "value",
+  ParserStart: "result",
 };
 
 export default grammar;

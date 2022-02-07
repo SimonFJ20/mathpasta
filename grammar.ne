@@ -29,7 +29,17 @@ const lexer = compile({
 
 @lexer lexer
 
-value       ->  AS                  {% id %}
+result      ->  _ value _ {% id %}
+
+value       ->  comparison                  {% id %}
+
+comparison  ->  comparison _ "=" _ AS       {% v => ({type: 'equal', left: v[0], right: v[4]}) %}
+            |   comparison _ "!=" _ AS      {% v => ({type: 'inequal', left: v[0], right: v[4]}) %}
+            |   comparison _ "<=" _ AS      {% v => ({type: 'lte', left: v[0], right: v[4]}) %}
+            |   comparison _ ">=" _ AS      {% v => ({type: 'gte', left: v[0], right: v[4]}) %}
+            |   comparison _ "<" _ AS       {% v => ({type: 'lt', left: v[0], right: v[4]}) %}
+            |   comparison _ ">" _ AS       {% v => ({type: 'gt', left: v[0], right: v[4]}) %}
+            |   AS {% id %}
 
 AS          ->  AS _ "+" _ MD       {% v => ({type: 'addition', left: v[0], right: v[4]}) %}
             |   AS _ "-" _ MD       {% v => ({type: 'subtraction', left: v[0], right: v[4]}) %}

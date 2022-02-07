@@ -2,8 +2,45 @@
 export type AST = ValueNode
 
 export type ValueNode =
-    AdditionNode | SubtractionNode | MultiplicationNode | DivisionNode | ExponentationNode
+    EqualNode | InequalNode | LTENode | GTENode | LTNode | GTNode
+    | AdditionNode | SubtractionNode | MultiplicationNode | DivisionNode | ExponentationNode
     | ParenthesisNode | FunctionNode | Identifier | Literal
+
+export type EqualNode = {
+    type: 'equal',
+    left: ValueNode,
+    right: ValueNode,
+}
+
+export type InequalNode = {
+    type: 'inequal',
+    left: ValueNode,
+    right: ValueNode,
+}
+
+export type LTENode = {
+    type: 'lte',
+    left: ValueNode,
+    right: ValueNode,
+}
+
+export type GTENode = {
+    type: 'gte',
+    left: ValueNode,
+    right: ValueNode,
+}
+
+export type LTNode = {
+    type: 'lt',
+    left: ValueNode,
+    right: ValueNode,
+}
+
+export type GTNode = {
+    type: 'gt',
+    left: ValueNode,
+    right: ValueNode,
+}
 
 export type AdditionNode = {
     type: 'addition',
