@@ -5,6 +5,7 @@ export const latexify = (ast: AST): string => {
 }
 
 const valueNode = (node: ValueNode): string => {
+    console.log(node)
     switch (node.type) {
         case 'equal':
             return `{${valueNode(node.left)}}={${valueNode(node.right)}}`;

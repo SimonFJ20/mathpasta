@@ -29,7 +29,7 @@ const lexer = compile({
 
 @lexer lexer
 
-result      ->  _ value _ {% id %}
+result      ->  _ value _ {% v => v[1] %}
 
 value       ->  comparison                  {% id %}
 
