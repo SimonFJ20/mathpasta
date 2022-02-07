@@ -1,7 +1,7 @@
 import { AST, ValueNode } from "./ast";
 
 export const latexify = (ast: AST): string => {
-    return `$$${valueNode(ast)}$$`;
+    return `${valueNode(ast)}`;
 }
 
 const valueNode = (node: ValueNode): string => {
