@@ -1,6 +1,6 @@
 {
   "name": "mathparsa-latexifier-calculator-lib",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Parse Plain-text Math to Latex and Evaluation",
   "main": "index.js",
   "dependencies": {

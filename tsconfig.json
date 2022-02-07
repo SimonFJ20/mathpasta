@@ -21,6 +21,7 @@
       "skipLibCheck": true,
       "strict": true,
       "esModuleInterop": true,
+      "declaration": true
     },
     "include": [
       "./src/**/*.ts"
