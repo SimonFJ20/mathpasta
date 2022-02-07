@@ -35,7 +35,7 @@ const valueNode = (node: ValueNode): string => {
         case 'parenthesis':
             return `\\left(${valueNode(node.value)}\\right)`;
         case 'function':
-            return `\\${node.name}${node.params.map(p => `{${p}}`).join('')}`;
+            return `\\${node.name}${node.params.map(p => `{${valueNode(p)}}`).join('')}`;
         case 'name':
             return node.value in constants ? constants[node.value] : node.value;
         case 'int':
